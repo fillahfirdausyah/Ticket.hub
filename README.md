@@ -13,3 +13,4 @@ Minggu 8-12-2019
 - Buat Sistem Daftar tapi error udah jam 4.21 bobo dulu gan :)
 - Hapus Sistem Daftar (ngambek dia gan, sistem daftarnya susah di mngerti kayak doi #eaaa)
 - Menambahkan Halaman Admin
+- Fix Minor Bug
