@@ -14,3 +14,7 @@ Minggu 8-12-2019
 - Hapus Sistem Daftar (ngambek dia gan, sistem daftarnya susah di mngerti kayak doi #eaaa)
 - Menambahkan Halaman Admin
 - Fix Minor Bug
+
+Senin 9-12-2019
+- Membuat Database Binary
+- Membuat Create Read data untuk Admin
