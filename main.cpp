@@ -2,10 +2,8 @@
 #include <string>
 #include <conio.h>
 #include <fstream>
-#include <stdlib.h>
 
 using namespace std;
-
 
 void judul() {
 	cout << "\t\t\t\t          ##############################" << endl;
@@ -18,7 +16,7 @@ void judul() {
 void bersih() {
 	system("cls");
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //ProtoType Function
 void menuUtama();
 void login();
@@ -29,16 +27,18 @@ void mainAdmin();
 
 //Main Program
 main () {
+
 	judul();
 	menuUtama();
 
-getch();
+	getch();
 }
 
-
-
-// Proses Program
-// Function
+/////////////////////////
+//	Inti Program		/
+//	Function			/
+//						/
+/////////////////////////
 
 //Tampilkan Menu
 void menuUtama() {
@@ -79,13 +79,16 @@ void login() {
 
 	bersih();
 	judul();
-
 	string user;
 	string pass;
+	cout << "\tSilahkan Login" << endl;
+	cout << "\t====================================" << endl;
 	cout << "\tUsername : ";
 	cin >> user;
+	cout << "\t====================================" << endl;
 	cout << "\tPassword : ";
 	cin >> pass;
+	cout << "\t====================================" << endl;
 
 		if (user == "admin" && pass == "admin123") {
 			bersih();
@@ -96,7 +99,7 @@ void login() {
 			judul();
 			cout << "\tWelcome " << user << endl;
 		}else {
-			cout << "Anda belum terdaftar!";
+			cout << "\tAnda Karyawan? Jika lupa password hubungi Admin!";
 		}
 }
 
@@ -130,11 +133,12 @@ void mainAdmin() {
 	cout << "\t2. Lihat Data Ticket"  << endl;
 	cout << "\t3. Edit Data Ticket"   << endl;
 	cout << "\t4. Hapus Data Ticket"  << endl;
+	cout << "\t5. Logout"  << endl;
 	cout << "\t====================================" << endl;
 	cout << "\tPilih Menu : ";
 	cin >> pAdmin;
 
-	enum option {CREATE = 1, READ, UPDATE, DELETE};
+	enum option {CREATE = 1, READ, UPDATE, DELETE, FINISH};
 	switch (pAdmin) {
 		case CREATE:
 			cout << "\tTambah Data Ticket : ";
@@ -148,5 +152,11 @@ void mainAdmin() {
 		case DELETE:
 			cout << "\tHapus Data Ticket : ";
 			break;
+		case FINISH:
+			bersih();
+			judul();
+			menuUtama();
+			break;
+
 	}
 }
