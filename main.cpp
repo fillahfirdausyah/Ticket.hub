@@ -2,6 +2,7 @@
 #include <string>
 #include <conio.h>
 #include <fstream>
+#include <limits>
 
 using namespace std;
 
@@ -16,14 +17,28 @@ void judul() {
 void bersih() {
 	system("cls");
 }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+struct Tiket {
+	int pk;
+	string kode;
+	string nama;
+	string jam;
+	string teater;
+	string harga;
+};
+
 //ProtoType Function
 void menuUtama();
 void login();
-void lupa();
-void help();
-void about();
 void mainAdmin();
+void writeData(fstream &data, int posisi, Tiket &inputTiket);
+void addDataTiket(fstream &data);
+int getDataSize(fstream &data);
+Tiket readData(fstream &data, int posisi);
+void displayDataTiket(fstream &data);
+
+
+
 
 //Main Program
 main () {
@@ -31,7 +46,7 @@ main () {
 	judul();
 	menuUtama();
 
-	getch();
+getch();
 }
 
 /////////////////////////
@@ -43,14 +58,14 @@ main () {
 //Tampilkan Menu
 void menuUtama() {
 	int pilih;
-	cout << "\tMenu Utama" << endl;
-	cout << "\t====================================" << endl;
-	cout << "\t1.Login" << endl;
-	cout << "\t2.Lupa" << endl;
-	cout << "\t3.Help" << endl;
-	cout << "\t4.About" << endl;
-	cout << "\t====================================" << endl;
-	cout << "\tPilih Menu : ";
+	cout << "Menu Utama" << endl;
+	cout << "====================================" << endl;
+	cout << "1.Login" << endl;
+	cout << "2.Lupa" << endl;
+	cout << "3.Help" << endl;
+	cout << "4.About" << endl;
+	cout << "====================================" << endl;
+	cout << "Pilih Menu : ";
 	cin >> pilih;
 
 
@@ -60,15 +75,17 @@ void menuUtama() {
  		break;
 
  		case 2:
- 			lupa();
+ 			cout << "lupa" << endl;
  		break;
 
  		case 3:
- 			help();
+ 		bersih ();
+		judul  ();
+			cout << "\t\t\t\t   Selamat Datang di pusat bantuan Tickte.hub";
  		break;
 
  		case 4:
- 			about();
+ 			cout << "About " << endl;
  		break;
 
 	};
@@ -81,14 +98,14 @@ void login() {
 	judul();
 	string user;
 	string pass;
-	cout << "\tSilahkan Login" << endl;
-	cout << "\t====================================" << endl;
-	cout << "\tUsername : ";
+	cout << "Silahkan Login" << endl;
+	cout << "====================================" << endl;
+	cout << "Username : ";
 	cin >> user;
-	cout << "\t====================================" << endl;
-	cout << "\tPassword : ";
+	cout << "====================================" << endl;
+	cout << "Password : ";
 	cin >> pass;
-	cout << "\t====================================" << endl;
+	cout << "====================================" << endl;
 
 		if (user == "admin" && pass == "admin123") {
 			bersih();
@@ -97,60 +114,62 @@ void login() {
 		}else if (user == "kasir" && pass == "kasir123") {
 			bersih();
 			judul();
-			cout << "\tWelcome " << user << endl;
+			cout << "Welcome " << user << endl;
 		}else {
-			cout << "\tAnda Karyawan? Jika lupa password hubungi Admin!";
+			cout << "Anda Karyawan? Jika lupa password hubungi Admin!";
 		}
 }
 
-//Jika User memilih Lupa
-void lupa() {
 
-}
-
-//Jika User memilih Help
-void help() {
-	bersih ();
-	judul  ();
-
-	cout << "\t\t\t\t   Selamat Datang di pusat bantuan Tickte.hub";
-
-}
-
-//Jika User memilih About
-void about() {
-
-}
-
+//Halaman Admin
 void mainAdmin() {
+	lanjut:
+
 	bersih();
 	judul();
 
+	fstream data;
+	data.open("data.bin", ios::out | ios::in | ios::binary);
+	//chech database ada atau tidak
+	if (data.is_open()) {
+		cout << "database di temukan " << endl;
+	}else {
+		cout << "database tidak di temukan. Sudah di buatkan database baru" << endl;
+		data.close();
+		data.open("data.bin", ios::trunc | ios::out | ios::in | ios::binary);
+	}
+
 	int pAdmin;
-	cout << "\tSelamat Datang admin"  << endl;
-	cout << "\t====================================" << endl;
-	cout << "\t1. Tambah Data Ticket" << endl;
-	cout << "\t2. Lihat Data Ticket"  << endl;
-	cout << "\t3. Edit Data Ticket"   << endl;
-	cout << "\t4. Hapus Data Ticket"  << endl;
-	cout << "\t5. Logout"  << endl;
-	cout << "\t====================================" << endl;
-	cout << "\tPilih Menu : ";
+	char is_continue;
+	cout << "Selamat Datang admin"  << endl;
+	cout << "====================================" << endl;
+	cout << "1. Tambah Data Ticket" << endl;
+	cout << "2. Lihat Data Ticket"  << endl;
+	cout << "3. Edit Data Ticket"   << endl;
+	cout << "4. Hapus Data Ticket"  << endl;
+	cout << "5. Logout"  << endl;
+	cout << "====================================" << endl;
+	cout << "Pilih Menu : ";
 	cin >> pAdmin;
+	cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
 
 	enum option {CREATE = 1, READ, UPDATE, DELETE, FINISH};
 	switch (pAdmin) {
 		case CREATE:
-			cout << "\tTambah Data Ticket : ";
+			cout << "Tambah Data Ticket" << endl;
+			cout << "====================================" << endl;
+			addDataTiket(data);
 			break;
 		case READ:
-			cout << "\tLihat Data Ticket : ";
+			cout << "Lihat Data Ticket" << endl;
+			displayDataTiket(data);
 			break;
 		case UPDATE:
-			cout << "\tEdit Data Ticket : ";
+			cout << "Edit Data Ticket : " << endl;
 			break;
 		case DELETE:
-			cout << "\tHapus Data Ticket : ";
+			cout << "Hapus Data Ticket : " << endl;
 			break;
 		case FINISH:
 			bersih();
@@ -159,4 +178,93 @@ void mainAdmin() {
 			break;
 
 	}
+label_continue:
+
+	cout << "Lanjutkan?(Y/N) : ";
+	cin >> is_continue;
+
+	if (is_continue == 'y' || is_continue == 'Y') {
+		goto lanjut;
+	}else if (is_continue == 'n' || is_continue == 'N') {
+		bersih();
+		judul();
+		cout << "Anda telah logout!" << endl;
+		menuUtama();
+	}else {
+		goto label_continue;
+	}
+
+}
+
+
+
+void writeData(fstream &data, int posisi, Tiket &inputTiket){
+	data.seekp((posisi - 1)*sizeof(Tiket), ios::beg);
+	data.write(reinterpret_cast<char*>(&inputTiket),sizeof(Tiket));
+}
+
+
+int getDataSize(fstream &data){
+	int start, end;
+	data.seekg(0,ios::beg);
+	start = data.tellg();
+	data.seekg(0,ios::end);
+	end = data.tellg();
+	return (end-start)/sizeof(Tiket);
+}
+
+Tiket readData(fstream &data, int posisi) {
+	Tiket readTiket;
+	data.seekg((posisi - 1)*sizeof(Tiket),ios::beg);
+	data.read(reinterpret_cast<char*>(&readTiket),sizeof(Tiket));
+
+	return readTiket;
+
+}
+
+//tambah data tiket
+void addDataTiket(fstream &data){
+	
+	Tiket inputTiket, lastTiket;
+
+	int size = getDataSize(data);
+	cout << "Ukuran data 	: " << size << endl;
+
+	if (size == 0) {
+		inputTiket.pk = 1;
+	}else {
+		lastTiket = readData(data,size);
+		inputTiket.pk = lastTiket.pk + 1;
+		cout << "pk = " << inputTiket.pk << endl;
+	}
+
+	// readData(data, size);
+
+
+	cout << "Kode Tiket 	: ";
+	getline(cin, inputTiket.kode);
+	cout << "Nama Film 	: ";
+	getline(cin, inputTiket.nama);
+	cout << "Jam Tayang 	: ";
+	getline(cin, inputTiket.jam);
+	cout << "Theater 	: ";
+	getline(cin, inputTiket.teater);
+	cout << "Harga Tiket 	: ";
+	getline(cin, inputTiket.harga);
+
+	writeData(data,size+1,inputTiket);
+}
+
+void displayDataTiket(fstream &data) {
+	int size = getDataSize(data);
+	Tiket showTiket;
+	cout << "No. \tKode Tiket. \tNama Film. \tJam Tayang. \tTheater. \tHarga Tiket." << endl;
+		for (int i = 1; i <= size; i++) {
+			showTiket = readData(data,i);
+			cout << i << "\t";
+			cout << showTiket.kode << "\t \t";
+			cout << showTiket.nama << "\t \t";
+			cout << showTiket.jam << "\t \t";
+			cout << showTiket.teater << "\t \t";
+			cout << showTiket.harga << endl;		}
 }
