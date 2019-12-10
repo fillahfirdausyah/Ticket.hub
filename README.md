@@ -17,4 +17,9 @@ Minggu 8-12-2019
 
 Senin 9-12-2019
 - Membuat Database Binary
-- Membuat Create Read data untuk Admin
+- Membuat Create dan Read data untuk Admin
+
+Selasa 10-12-2019
+- Membuat Update data untuk Admin
+- Fix Tampilan
+- Fix Minor Bug
