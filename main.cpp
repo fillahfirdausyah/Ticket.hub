@@ -36,9 +36,7 @@ void addDataTiket(fstream &data);
 int getDataSize(fstream &data);
 Tiket readData(fstream &data, int posisi);
 void displayDataTiket(fstream &data);
-
-
-
+void updateRecord(fstream &data);
 
 //Main Program
 main () {
@@ -107,16 +105,19 @@ void login() {
 	cin >> pass;
 	cout << "====================================" << endl;
 
-		if (user == "admin" && pass == "admin123") {
+		if (user == "admin" && pass == "*****") {
 			bersih();
 			judul();
 			mainAdmin();
-		}else if (user == "kasir" && pass == "kasir123") {
+		}else if (user == "kasir" && pass == "*****") {
 			bersih();
 			judul();
 			cout << "Welcome " << user << endl;
 		}else {
-			cout << "Anda Karyawan? Jika lupa password hubungi Admin!";
+			bersih();
+			judul();
+			cout << "Anda Karyawan? Jika lupa password hubungi Admin!" << endl;
+			menuUtama();
 		}
 }
 
@@ -163,10 +164,15 @@ void mainAdmin() {
 			break;
 		case READ:
 			cout << "Lihat Data Ticket" << endl;
+			cout << "====================================" << endl;
 			displayDataTiket(data);
 			break;
 		case UPDATE:
-			cout << "Edit Data Ticket : " << endl;
+			cout << "Edit Data Ticket" << endl;
+			cout << "====================================" << endl;
+			displayDataTiket(data);
+			updateRecord(data);
+			displayDataTiket(data);
 			break;
 		case DELETE:
 			cout << "Hapus Data Ticket : " << endl;
@@ -193,6 +199,45 @@ label_continue:
 	}else {
 		goto label_continue;
 	}
+
+}
+
+
+void updateRecord(fstream &data) {
+	int nomor;
+	Tiket updateTiket;
+
+	cout << "Pilih data yang ingin di rubah (berdasarkan Nomor) : ";
+	cin >> nomor;
+	cin.ignore(numeric_limits<streamsize>::max(),'\n');
+	cout << "====================================" << endl;
+
+	updateTiket = readData(data,nomor);
+
+	cout << "Data yang di pilih : " << endl;
+	cout << "Kode Tiket 	: " << updateTiket.kode << endl;
+	cout << "Nama Film 	: " << updateTiket.nama << endl;
+	cout << "Jam Tayang 	: " << updateTiket.jam << endl;
+	cout << "Theater 	: " << updateTiket.teater << endl;
+	cout << "Harga Tiket 	: " << updateTiket.harga << endl;
+	cout << "====================================" << endl;
+
+	cout << "Merubah data tiket" << endl;
+	cout << "====================================" << endl;
+
+	cout << "Kode Tiket 	: ";
+	getline(cin,updateTiket.kode);
+	cout << "Nama Film 	: ";
+	getline(cin,updateTiket.nama);
+	cout << "Jam Tayang 	: ";
+	getline(cin,updateTiket.jam);
+	cout << "Theater 	: ";
+	getline(cin,updateTiket.teater);
+	cout << "Harga Tiket 	: ";
+	getline(cin,updateTiket.harga);
+
+	writeData(data,nomor,updateTiket);
+
 
 }
 
@@ -238,8 +283,6 @@ void addDataTiket(fstream &data){
 		cout << "pk = " << inputTiket.pk << endl;
 	}
 
-	// readData(data, size);
-
 
 	cout << "Kode Tiket 	: ";
 	getline(cin, inputTiket.kode);
@@ -258,13 +301,14 @@ void addDataTiket(fstream &data){
 void displayDataTiket(fstream &data) {
 	int size = getDataSize(data);
 	Tiket showTiket;
-	cout << "No. \tKode Tiket. \tNama Film. \tJam Tayang. \tTheater. \tHarga Tiket." << endl;
+	cout << "No.  \tKode Tiket.  \tNama Film.  \t\tJam Tayang.  \tTheater.  \tHarga Tiket." << endl;
 		for (int i = 1; i <= size; i++) {
 			showTiket = readData(data,i);
 			cout << i << "\t";
-			cout << showTiket.kode << "\t \t";
-			cout << showTiket.nama << "\t \t";
-			cout << showTiket.jam << "\t \t";
-			cout << showTiket.teater << "\t \t";
-			cout << showTiket.harga << endl;		}
+			cout << showTiket.kode << "\t\t";
+			cout << showTiket.nama << "\t\t";
+			cout << showTiket.jam << "\t\t";
+			cout << showTiket.teater << "\t\t";
+			cout << showTiket.harga << endl;		
+		}
 }
