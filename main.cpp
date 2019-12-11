@@ -7,11 +7,11 @@
 using namespace std;
 
 void judul() {
-	cout << "\t\t\t\t          ##############################" << endl;
-	cout << "\t\t\t\t          #                            #" << endl;
-	cout << "\t\t\t\t          #          Ticket.hub        #" << endl;
-	cout << "\t\t\t\t          #             V2.4           #" << endl;
-	cout << "\t\t\t\t          ##############################" << endl;
+	cout << "\t\t\t\t\t##############################" << endl;
+	cout << "\t\t\t\t\t#                            #" << endl;
+	cout << "\t\t\t\t\t#          Ticket.hub        #" << endl;
+	cout << "\t\t\t\t\t#             V2.4           #" << endl;
+	cout << "\t\t\t\t\t##############################" << endl;
 }
 
 void bersih() {
@@ -20,7 +20,6 @@ void bersih() {
 
 struct Tiket {
 	int pk;
-	string kode;
 	string nama;
 	string jam;
 	string teater;
@@ -41,7 +40,7 @@ void updateRecord(fstream &data);
 void deleteRecord(fstream &data);
 
 //Main Program
-main () {
+int main () {
 
 	judul();
 	menuUtama();
@@ -202,6 +201,108 @@ label_continue:
 
 }
 
+//Write Data
+void writeData(fstream &data, int posisi, Tiket &inputTiket){
+	data.seekp((posisi - 1)*sizeof(Tiket), ios::beg);
+	data.write(reinterpret_cast<char*>(&inputTiket),sizeof(Tiket));
+}
+
+//Membaca Data Didatabase
+Tiket readData(fstream &data, int posisi) {
+	Tiket readTiket;
+	data.seekg((posisi - 1)*sizeof(Tiket),ios::beg);
+	data.read(reinterpret_cast<char*>(&readTiket),sizeof(Tiket));
+
+	return readTiket;
+}
+
+//Tampilkan Data
+void displayDataTiket(fstream &data) {
+	int size = getDataSize(data);
+	Tiket showTiket;
+	cout << "No. \tNama Film.  \t\tJam Tayang. \tTeheater. \tHarga Tiket." << endl;
+		for (int i = 1; i <= size; i++) {
+			showTiket = readData(data,i);
+			cout << i << "\t";
+			cout << showTiket.nama << "\t\t";
+			cout << showTiket.jam << "\t\t";
+			cout << showTiket.teater << "\t\t";
+			cout << showTiket.harga << endl;		
+		}
+}
+
+//Menghapus Data
+void deleteRecord(fstream &data){
+	int nomor,size,offset;
+	Tiket blankTiket, tempTiket;
+	fstream dataSementara;
+
+	size = getDataSize(data);
+	cout << "Hapus nomor: ";
+	cin >> nomor;
+	writeData(data,nomor,blankTiket);
+	dataSementara.open("temp.dat", ios::trunc|ios::out|ios::in|ios::binary);
+
+	offset = 0;
+
+	for (int i=1 ; i <=size ; i++){
+		tempTiket = readData(data,i);
+
+		if (!tempTiket.nama.empty()){
+			writeData(dataSementara,i - offset,tempTiket);
+		} else {
+			offset++;
+			cout << "deleted item" << endl;
+		}
+	}
+	// 4. kita pindahkan data dari file sementara ke data.bin
+	size = getDataSize(dataSementara);
+	data.close();
+	data.open("data.bin",ios::trunc|ios::out|ios::binary);
+	data.close();
+	data.open("data.bin",ios::out|ios::in|ios::binary);
+
+	for(int i = 1; i <= size; i++){
+		tempTiket = readData(dataSementara,i);
+		writeData(data,i,tempTiket);
+	}
+}
+
+//Mengupdate Data
+void updateRecord(fstream &data) {
+	int nomor;
+	Tiket updateTiket;
+
+	cout << "Pilih data yang ingin di rubah (berdasarkan Nomor) : ";
+	cin >> nomor;
+	cin.ignore(numeric_limits<streamsize>::max(),'\n');
+	cout << "====================================" << endl;
+
+	updateTiket = readData(data,nomor);
+
+	cout << "Data yang di pilih : " << endl;
+	cout << "Nama Film 	: " << updateTiket.nama << endl;
+	cout << "Jam Tayang 	: " << updateTiket.jam << endl;
+	cout << "Theater 	 	: " << updateTiket.teater << endl;
+	cout << "Harga Tiket 	: " << updateTiket.harga << endl;
+	cout << "====================================" << endl;
+
+	cout << "Merubah data tiket" << endl;
+	cout << "====================================" << endl;
+
+	cout << "Nama Film 	: ";
+	getline(cin,updateTiket.nama);
+	cout << "Jam Tayang 	: ";
+	getline(cin,updateTiket.jam);
+	cout << "Theater 	: ";
+	getline(cin,updateTiket.teater);
+	cout << "Harga Tiket 	: ";
+	getline(cin,updateTiket.harga);
+
+	writeData(data,nomor,updateTiket);
+
+}
+
 //Cek Database
 void cekDatabase(fstream &data) {
 	data.open("data.bin", ios::out | ios::in | ios::binary);
@@ -213,31 +314,6 @@ void cekDatabase(fstream &data) {
 		data.close();
 		data.open("data.bin", ios::trunc | ios::out | ios::in | ios::binary);
 	}
-}
-
-//Write Data
-void writeData(fstream &data, int posisi, Tiket &inputTiket){
-	data.seekp((posisi - 1)*sizeof(Tiket), ios::beg);
-	data.write(reinterpret_cast<char*>(&inputTiket),sizeof(Tiket));
-}
-
-//Mengambil Ukuran Data
-int getDataSize(fstream &data){
-	int start, end;
-	data.seekg(0,ios::beg);
-	start = data.tellg();
-	data.seekg(0,ios::end);
-	end = data.tellg();
-	return (end-start)/sizeof(Tiket);
-}
-
-//Membaca Data Didatabase
-Tiket readData(fstream &data, int posisi) {
-	Tiket readTiket;
-	data.seekg((posisi - 1)*sizeof(Tiket),ios::beg);
-	data.read(reinterpret_cast<char*>(&readTiket),sizeof(Tiket));
-
-	return readTiket;
 }
 
 //tambah data tiket
@@ -256,9 +332,6 @@ void addDataTiket(fstream &data){
 		cout << "pk = " << inputTiket.pk << endl;
 	}
 
-
-	cout << "Kode Tiket 	: ";
-	getline(cin, inputTiket.kode);
 	cout << "Nama Film 	: ";
 	getline(cin, inputTiket.nama);
 	cout << "Jam Tayang 	: ";
@@ -271,97 +344,12 @@ void addDataTiket(fstream &data){
 	writeData(data,size+1,inputTiket);
 }
 
-//Tampilkan Data
-void displayDataTiket(fstream &data) {
-	int size = getDataSize(data);
-	Tiket showTiket;
-	cout << "No.  \tKode Tiket.  \tNama Film.  \t\tJam Tayang.  \tTheater.  \tHarga Tiket." << endl;
-		for (int i = 1; i <= size; i++) {
-			showTiket = readData(data,i);
-			cout << i << "\t";
-			cout << showTiket.kode << "\t\t";
-			cout << showTiket.nama << "\t\t";
-			cout << showTiket.jam << "\t\t";
-			cout << showTiket.teater << "\t\t";
-			cout << showTiket.harga << endl;		
-		}
+//Mengambil Ukuran Data
+int getDataSize(fstream &data){
+	int start, end;
+	data.seekg(0,ios::beg);
+	start = data.tellg();
+	data.seekg(0,ios::end);
+	end = data.tellg();
+	return (end-start)/sizeof(Tiket);
 }
-
-//Mengupdate Data
-void updateRecord(fstream &data) {
-	int nomor;
-	Tiket updateTiket;
-
-	cout << "Pilih data yang ingin di rubah (berdasarkan Nomor) : ";
-	cin >> nomor;
-	cin.ignore(numeric_limits<streamsize>::max(),'\n');
-	cout << "====================================" << endl;
-
-	updateTiket = readData(data,nomor);
-
-	cout << "Data yang di pilih : " << endl;
-	cout << "Kode Tiket 	: " << updateTiket.kode << endl;
-	cout << "Nama Film 	: " << updateTiket.nama << endl;
-	cout << "Jam Tayang 	: " << updateTiket.jam << endl;
-	cout << "Theater 	: " << updateTiket.teater << endl;
-	cout << "Harga Tiket 	: " << updateTiket.harga << endl;
-	cout << "====================================" << endl;
-
-	cout << "Merubah data tiket" << endl;
-	cout << "====================================" << endl;
-
-	cout << "Kode Tiket 	: ";
-	getline(cin,updateTiket.kode);
-	cout << "Nama Film 	: ";
-	getline(cin,updateTiket.nama);
-	cout << "Jam Tayang 	: ";
-	getline(cin,updateTiket.jam);
-	cout << "Theater 	: ";
-	getline(cin,updateTiket.teater);
-	cout << "Harga Tiket 	: ";
-	getline(cin,updateTiket.harga);
-
-	writeData(data,nomor,updateTiket);
-
-}
-
-//Menghapus Data
-void deleteRecord(fstream &data) {
-	int nomor,size,offset;
-	Tiket blankTiket, tempTiket;
-
-	fstream dataSementara;
-
-	size = getDataSize(data);
-
-	cout << "Pilih data yang akan dihapus(berdasarkan nomor) : ";
-	cin >> nomor;
-
-	writeData(data,nomor,blankTiket);
-
-	dataSementara.open("temp.dat", ios::trunc | ios::out | ios::in | ios::binary);
-
-	offset = 0;
-	for (int i = 1; i <= size; i++) {
-		tempTiket = readData(data,i);
-			if (!tempTiket.kode.empty()) {
-				writeData(dataSementara,i - offset,tempTiket);
-			}else {
-				offset++;
-				cout << "Deleted Tiket" << endl;
-			}
-
-	}
-
-	size = getDataSize(dataSementara);
-	data.close();
-	data.open("data.bin", ios::trunc | ios::out | ios::binary);
-	data.close();
-	data.open("data.bin", ios::out | ios::in | ios::binary);
-
-	for (int i = 1; i <= size; i++) {
-		tempTiket = readData(dataSementara,i);
-		writeData(data,i,tempTiket);
-	}
-}
-
