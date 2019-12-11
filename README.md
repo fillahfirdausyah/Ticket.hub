@@ -23,3 +23,7 @@ Selasa 10-12-2019
 - Membuat Update data untuk Admin
 - Fix Tampilan
 - Fix Minor Bug
+
+Rabu 11-12-2019
+- Membuat Delete data untuk Admin
+- Fitur CRUD untuk Admin 100%
