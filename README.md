@@ -27,3 +27,7 @@ Selasa 10-12-2019
 Rabu 11-12-2019
 - Membuat Delete data untuk Admin
 - Fitur CRUD untuk Admin 100%
+
+Jumat 13-12-2019
+- Membuat Sistem kasir
+- Membuat Fitur proses pesanan
