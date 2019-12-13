@@ -3,6 +3,8 @@
 #include <conio.h>
 #include <fstream>
 #include <limits>
+#include <sstream>
+
 
 using namespace std;
 
@@ -30,6 +32,7 @@ struct Tiket {
 void menuUtama();
 void login();
 void mainAdmin();
+void mainKasir(fstream &data);
 void cekDatabase(fstream &data);
 void writeData(fstream &data, int posisi, Tiket &inputTiket);
 void addDataTiket(fstream &data);
@@ -58,12 +61,13 @@ getch();
 void menuUtama() {
 	int pilih;
 	cout << "Menu Utama" << endl;
-	cout << "====================================" << endl;
-	cout << "1.Login" << endl;
-	cout << "2.Lupa" << endl;
-	cout << "3.Help" << endl;
-	cout << "4.About" << endl;
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
+	cout << "1. Login" << endl;
+	cout << "2. Lupa" << endl;
+	cout << "3. Help" << endl;
+	cout << "4. About" << endl;
+	cout << "5. exit" << endl;
+	cout << "============================" << endl;
 	cout << "Pilih Menu : ";
 	cin >> pilih;
 
@@ -87,8 +91,10 @@ void menuUtama() {
  			cout << "About " << endl;
  		break;
 
-	};
-}
+ 		case 5:
+ 		cout << "Terima Kasih " << endl;
+
+	};}
 
 //Proses Login
 void login() {
@@ -98,22 +104,18 @@ void login() {
 	string user;
 	string pass;
 	cout << "Silahkan Login" << endl;
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
 	cout << "Username : ";
 	cin >> user;
-	cout << "====================================" << endl;
+	cout << endl;
 	cout << "Password : ";
 	cin >> pass;
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
 
-		if (user == "admin" && pass == "*****") {
+		if (user == "admin" && pass == "admin123") {
 			bersih();
 			judul();
 			mainAdmin();
-		}else if (user == "kasir" && pass == "*****") {
-			bersih();
-			judul();
-			cout << "Welcome " << user << endl;
 		}else {
 			bersih();
 			judul();
@@ -121,7 +123,6 @@ void login() {
 			menuUtama();
 		}
 }
-
 
 //Halaman Admin
 void mainAdmin() {
@@ -135,46 +136,56 @@ void mainAdmin() {
 	int pAdmin;
 	char is_continue;
 	cout << "Selamat Datang admin"  << endl;
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
 	cout << "1. Tambah Data Ticket" << endl;
 	cout << "2. Lihat Data Ticket"  << endl;
 	cout << "3. Edit Data Ticket"   << endl;
 	cout << "4. Hapus Data Ticket"  << endl;
-	cout << "5. Logout"  << endl;
-	cout << "====================================" << endl;
+	cout << "5. Masuk Sebagai Kasir" << endl;
+	cout << "6. Logout"  << endl;
+	cout << "============================" << endl;
 	cout << "Pilih Menu : ";
 	cin >> pAdmin;
 	cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
 
-	enum option {CREATE = 1, READ, UPDATE, DELETE, FINISH};
+	enum option {CREATE = 1, READ, UPDATE, DELETE, PROSES, FINISH};
 	switch (pAdmin) {
 		case CREATE:
 			cout << "Tambah Data Ticket" << endl;
-			cout << "====================================" << endl;
+			cout << "============================" << endl;
 			addDataTiket(data);
 			break;
 		case READ:
 			cout << "Lihat Data Ticket" << endl;
-			cout << "====================================" << endl;
+			cout << "============================" << endl;
 			displayDataTiket(data);
 			break;
 		case UPDATE:
 			bersih();
 			judul();
 			cout << "Edit Data Ticket" << endl;
-			cout << "====================================" << endl;
+			cout << "============================" << endl;
 			displayDataTiket(data);
-			cout << "====================================" << endl;
+			cout << "============================" << endl;
 			updateRecord(data);
 			displayDataTiket(data);
 			break;
 		case DELETE:
 			cout << "Hapus Data Ticket" << endl;
-			cout << "====================================" << endl;
+			cout << "============================" << endl;
 			displayDataTiket(data);
 			deleteRecord(data);
 			displayDataTiket(data);
+			break;
+		case PROSES:
+			bersih();
+			judul();
+			int psn,total;
+			cout << "Selamat Datang Kasir" << endl;
+			cout << "============================" << endl;
+			displayDataTiket(data);
+			mainKasir(data);
 			break;
 		case FINISH:
 			bersih();
@@ -198,7 +209,30 @@ label_continue:
 	}else {
 		goto label_continue;
 	}
+}
 
+//Halaman Kasir
+void mainKasir(fstream &data) {
+	int nomor,org,harga,total,kbl;
+
+	Tiket prosesTiket;
+
+	cout << "Nonton Film Apa ? : ";
+	cin >> nomor;
+
+	prosesTiket = readData(data,nomor);
+	cout << "Film yang di pilih" << endl;
+	cout << "Nama Film 	: " << prosesTiket.nama << endl;
+	cout << "Jam Tayang 	: " << prosesTiket.jam << endl;
+	cout << "Harga Tiket 	: " << prosesTiket.harga << endl;
+	cout << "============================" << endl;
+	cout << "Berapa Orang ? : ";
+	cin >> org;
+	istringstream(prosesTiket.harga) >> harga;
+	total = org * harga;
+	cout << "Total nya adalah : " << total << endl;
+
+	
 }
 
 //Write Data
@@ -220,53 +254,19 @@ Tiket readData(fstream &data, int posisi) {
 void displayDataTiket(fstream &data) {
 	int size = getDataSize(data);
 	Tiket showTiket;
-	cout << "No. \tNama Film.  \t\tJam Tayang. \tTeheater. \tHarga Tiket." << endl;
+	cout << "No. \tNama Film.\t\tJam Tayang. \tHarga Tiket." << endl;
 		for (int i = 1; i <= size; i++) {
 			showTiket = readData(data,i);
 			cout << i << "\t";
 			cout << showTiket.nama << "\t\t";
 			cout << showTiket.jam << "\t\t";
-			cout << showTiket.teater << "\t\t";
+			// cout << showTiket.teater << "\t\t";
 			cout << showTiket.harga << endl;		
 		}
 }
 
 //Menghapus Data
-void deleteRecord(fstream &data){
-	int nomor,size,offset;
-	Tiket blankTiket, tempTiket;
-	fstream dataSementara;
 
-	size = getDataSize(data);
-	cout << "Hapus nomor: ";
-	cin >> nomor;
-	writeData(data,nomor,blankTiket);
-	dataSementara.open("temp.dat", ios::trunc|ios::out|ios::in|ios::binary);
-
-	offset = 0;
-
-	for (int i=1 ; i <=size ; i++){
-		tempTiket = readData(data,i);
-
-		if (!tempTiket.nama.empty()){
-			writeData(dataSementara,i - offset,tempTiket);
-		} else {
-			offset++;
-			cout << "deleted item" << endl;
-		}
-	}
-	// 4. kita pindahkan data dari file sementara ke data.bin
-	size = getDataSize(dataSementara);
-	data.close();
-	data.open("data.bin",ios::trunc|ios::out|ios::binary);
-	data.close();
-	data.open("data.bin",ios::out|ios::in|ios::binary);
-
-	for(int i = 1; i <= size; i++){
-		tempTiket = readData(dataSementara,i);
-		writeData(data,i,tempTiket);
-	}
-}
 
 //Mengupdate Data
 void updateRecord(fstream &data) {
@@ -276,26 +276,26 @@ void updateRecord(fstream &data) {
 	cout << "Pilih data yang ingin di rubah (berdasarkan Nomor) : ";
 	cin >> nomor;
 	cin.ignore(numeric_limits<streamsize>::max(),'\n');
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
 
 	updateTiket = readData(data,nomor);
 
 	cout << "Data yang di pilih : " << endl;
 	cout << "Nama Film 	: " << updateTiket.nama << endl;
 	cout << "Jam Tayang 	: " << updateTiket.jam << endl;
-	cout << "Theater 	 	: " << updateTiket.teater << endl;
+	// cout << "Theater 	: " << updateTiket.teater << endl;
 	cout << "Harga Tiket 	: " << updateTiket.harga << endl;
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
 
 	cout << "Merubah data tiket" << endl;
-	cout << "====================================" << endl;
+	cout << "============================" << endl;
 
 	cout << "Nama Film 	: ";
 	getline(cin,updateTiket.nama);
 	cout << "Jam Tayang 	: ";
 	getline(cin,updateTiket.jam);
-	cout << "Theater 	: ";
-	getline(cin,updateTiket.teater);
+	// cout << "Theater 	: ";
+	// getline(cin,updateTiket.teater);
 	cout << "Harga Tiket 	: ";
 	getline(cin,updateTiket.harga);
 
@@ -336,8 +336,8 @@ void addDataTiket(fstream &data){
 	getline(cin, inputTiket.nama);
 	cout << "Jam Tayang 	: ";
 	getline(cin, inputTiket.jam);
-	cout << "Theater 	: ";
-	getline(cin, inputTiket.teater);
+	// cout << "Theater 	: ";
+	// getline(cin, inputTiket.teater);
 	cout << "Harga Tiket 	: ";
 	getline(cin, inputTiket.harga);
 
@@ -352,4 +352,46 @@ int getDataSize(fstream &data){
 	data.seekg(0,ios::end);
 	end = data.tellg();
 	return (end-start)/sizeof(Tiket);
+}
+
+//Menghapus Data
+void deleteRecord(fstream &data){
+	int nomor,size,offset;
+	Tiket blankTiket, tempTiket;
+	fstream dataSementara;
+	size = getDataSize(data);
+
+	//pilih
+	cout << "Hapus nomor : ";
+	cin >> nomor;
+
+	//isi data kosong
+	writeData(data,nomor,blankTiket);
+
+	//cek data
+	dataSementara.open("temp.bin", ios::trunc | ios::out | ios::in | ios::binary);
+
+		offset = 0;
+		for (int i = 1; i <= size; i++) {
+			tempTiket = readData(data,i);
+				 
+				if (!tempTiket.nama.empty()) {
+					writeData(dataSementara,i - offset,tempTiket);
+				}else {
+					offset++;
+					cout << "Tiket di hapus" << endl;
+				}
+		}
+
+	//pindahkan data
+	size = getDataSize(dataSementara);
+	data.close();
+	data.open("data.bin", ios::trunc | ios::out | ios::binary);
+	data.close();
+	data.open("data.bin", ios::out | ios::in | ios::binary);
+
+	for (int i = 1; i <= size; i++) {
+		tempTiket = readData(dataSementara,i);
+		writeData(data,i,tempTiket);
+	}
 }
