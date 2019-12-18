@@ -52,8 +52,8 @@ getch();
 }
 
 /////////////////////////
-//	Inti Program		/
-//	Function			/
+//	-Inti Program		/
+//	-Function			/
 //						/
 /////////////////////////
 
@@ -213,14 +213,15 @@ label_continue:
 
 //Halaman Kasir
 void mainKasir(fstream &data) {
-	int nomor,org,harga,total,kbl;
+	int nomor,org,total,kbl;
 
 	Tiket prosesTiket;
 
 	cout << "Nonton Film Apa ? : ";
 	cin >> nomor;
-
 	prosesTiket = readData(data,nomor);
+	int harga = 0;
+	stringstream h(prosesTiket.harga);
 	cout << "Film yang di pilih" << endl;
 	cout << "Nama Film 	: " << prosesTiket.nama << endl;
 	cout << "Jam Tayang 	: " << prosesTiket.jam << endl;
@@ -228,10 +229,9 @@ void mainKasir(fstream &data) {
 	cout << "============================" << endl;
 	cout << "Berapa Orang ? : ";
 	cin >> org;
-	istringstream(prosesTiket.harga) >> harga;
+	h >> harga;
 	total = org * harga;
-	cout << "Total nya adalah : " << total << endl;
-
+	cout << "Total nya adalah : " << total << ".000" << endl;
 	
 }
 
@@ -264,9 +264,6 @@ void displayDataTiket(fstream &data) {
 			cout << showTiket.harga << endl;		
 		}
 }
-
-//Menghapus Data
-
 
 //Mengupdate Data
 void updateRecord(fstream &data) {

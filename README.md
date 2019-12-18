@@ -31,3 +31,6 @@ Rabu 11-12-2019
 Jumat 13-12-2019
 - Membuat Sistem kasir
 - Membuat Fitur proses pesanan
+
+Rabu 18-12-2019
+- Commit Upgrade Fitur
