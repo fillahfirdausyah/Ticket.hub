@@ -34,3 +34,7 @@ Jumat 13-12-2019
 
 Rabu 18-12-2019
 - Commit Upgrade Fitur
+
+Senin 23-12-2019
+- Mengunah Sistem
+- Mengupgrade Code
