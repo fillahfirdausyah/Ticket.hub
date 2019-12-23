@@ -1,74 +1,84 @@
 #include <iostream>
-#include <string>
 #include <conio.h>
-#include <fstream>
-#include <limits>
-#include <sstream>
-
+#include <string>
 
 using namespace std;
 
+
+// Judul Program
 void judul() {
+	system("color 0C");
 	cout << "\t\t\t\t\t##############################" << endl;
 	cout << "\t\t\t\t\t#                            #" << endl;
 	cout << "\t\t\t\t\t#          Ticket.hub        #" << endl;
 	cout << "\t\t\t\t\t#             V2.4           #" << endl;
 	cout << "\t\t\t\t\t##############################" << endl;
+	cout << "\t\t\t\t\t\t\t    19.11.3204" << endl;
 }
 
-void bersih() {
-	system("cls");
+// Animasi Loading
+void loading() {
+	char loading[100]= "Menghubungkan...../";
+    for(int a = 0; a < 20; a++) {
+         for(int b = 0; b < 100000000; b++) {}
+       cout<<loading[a];
+         }
 }
 
+// Struktur Data
 struct Tiket {
-	int pk;
-	string nama;
-	string jam;
-	string teater;
-	string harga;
+	string 	kode;
+	string 	nama;
+	string	harga;
+	string 	jam;
+	string 	tujuan;
 };
 
-//ProtoType Function
+Tiket batas[100];
+int a,b,c,d;
+
+//Prototype Fungsi
 void menuUtama();
 void login();
 void mainAdmin();
-void mainKasir(fstream &data);
-void cekDatabase(fstream &data);
-void writeData(fstream &data, int posisi, Tiket &inputTiket);
-void addDataTiket(fstream &data);
-int getDataSize(fstream &data);
-Tiket readData(fstream &data, int posisi);
-void displayDataTiket(fstream &data);
-void updateRecord(fstream &data);
-void deleteRecord(fstream &data);
+void addData();
+void lihatData();
+void hapusData();
+void editData();
+
 
 //Main Program
-int main () {
+main () {
+	cout<<"\n\n\n\n\n=============================PROGRAM Pesan Ticket Bus=============================";
+ 	cout<<"\n\n\n\n\n\n\n\n\n\t\t\t     PROGRAM Fillah Firdausyah\n\n";
+ 	cout<<"\t\t\t        ASSALAMU'ALAIKUM";
+ 	getch();
+ 	system("cls");
+
 
 	judul();
 	menuUtama();
+	// mainAdmin();
 
 getch();
 }
 
-/////////////////////////
-//	-Inti Program		/
-//	-Function			/
-//						/
-/////////////////////////
 
-//Tampilkan Menu
+// #########-Fungsi Program-####################
+
+// Menu
 void menuUtama() {
+
 	int pilih;
-	cout << "Menu Utama" << endl;
+	char is_continue;
+	cout << "=======+Menu Utama+=========" << endl;
+	cout << "[1] Login" << endl;
+	cout << "[2] Lupa" << endl;
+	cout << "[3] Help" << endl;
+	cout << "[4] About" << endl;
+	cout << "[5] exit" << endl;
 	cout << "============================" << endl;
-	cout << "1. Login" << endl;
-	cout << "2. Lupa" << endl;
-	cout << "3. Help" << endl;
-	cout << "4. About" << endl;
-	cout << "5. exit" << endl;
-	cout << "============================" << endl;
-	cout << "Pilih Menu : ";
+	cout << "Pilih Menu [1-5]: ";
 	cin >> pilih;
 
 
@@ -82,8 +92,8 @@ void menuUtama() {
  		break;
 
  		case 3:
- 		bersih ();
-		judul  ();
+ 		system("cls");
+			judul();
 			cout << "\t\t\t\t   Selamat Datang di pusat bantuan Tickte.hub";
  		break;
 
@@ -94,12 +104,14 @@ void menuUtama() {
  		case 5:
  		cout << "Terima Kasih " << endl;
 
-	};}
+	}
 
-//Proses Login
+}
+
+// Proses Login
 void login() {
 
-	bersih();
+	system("cls");
 	judul();
 	string user;
 	string pass;
@@ -107,288 +119,170 @@ void login() {
 	cout << "============================" << endl;
 	cout << "Username : ";
 	cin >> user;
-	cout << endl;
 	cout << "Password : ";
 	cin >> pass;
 	cout << "============================" << endl;
 
 		if (user == "admin" && pass == "admin123") {
-			bersih();
+			system("cls");
 			judul();
+			loading();
 			mainAdmin();
 		}else {
-			bersih();
+			system("cls");
 			judul();
 			 cout << "Anda Karyawan? Jika lupa password hubungi Admin!" << endl;
 			menuUtama();
 		}
 }
 
-//Halaman Admin
-void mainAdmin() {
+// Halaman Admin
+void mainAdmin(){
 	lanjut:
-	bersih();
+	system("cls");
 	judul();
 
-	fstream data;
-	cekDatabase(data);
 
-	int pAdmin;
 	char is_continue;
-	cout << "Selamat Datang admin"  << endl;
+	int pilih;
+	cout << endl;
+	cout << endl;
+	cout << "Selamat Datang Admin" << endl;
+	cout << "=======+Menu Admin+=========" << endl;
+	cout << "[1] Tambah Data" << endl;
+	cout << "[2] Lihat  Data" << endl;
+	cout << "[3] Hapus   Data" << endl;
+	cout << "[4] Edit  Data" << endl;
+	cout << "[5] Masuk Sebagai Kasir" << endl;
+	cout << "[6] Logout" << endl;
 	cout << "============================" << endl;
-	cout << "1. Tambah Data Ticket" << endl;
-	cout << "2. Lihat Data Ticket"  << endl;
-	cout << "3. Edit Data Ticket"   << endl;
-	cout << "4. Hapus Data Ticket"  << endl;
-	cout << "5. Masuk Sebagai Kasir" << endl;
-	cout << "6. Logout"  << endl;
-	cout << "============================" << endl;
-	cout << "Pilih Menu : ";
-	cin >> pAdmin;
-	cin.ignore(numeric_limits<streamsize>::max(),'\n');
+	cout << "Pilih Menu [1-6]: ";
+	cin >> pilih;
 
+	enum option {TAMBAH = 1, LIHAT, HAPUS, EDIT, KASIR, FINISH};
+	switch (pilih) {
 
-	enum option {CREATE = 1, READ, UPDATE, DELETE, PROSES, FINISH};
-	switch (pAdmin) {
-		case CREATE:
-			cout << "Tambah Data Ticket" << endl;
-			cout << "============================" << endl;
-			addDataTiket(data);
-			break;
-		case READ:
-			cout << "Lihat Data Ticket" << endl;
-			cout << "============================" << endl;
-			displayDataTiket(data);
-			break;
-		case UPDATE:
-			bersih();
+		case TAMBAH:
+			system("cls");
 			judul();
-			cout << "Edit Data Ticket" << endl;
-			cout << "============================" << endl;
-			displayDataTiket(data);
-			cout << "============================" << endl;
-			updateRecord(data);
-			displayDataTiket(data);
+			addData();
+		break;
+
+		case LIHAT:
+			lihatData();
+		break;
+
+		case HAPUS:
+			hapusData();
+		break;
+
+		case EDIT:
+			editData();
 			break;
-		case DELETE:
-			cout << "Hapus Data Ticket" << endl;
-			cout << "============================" << endl;
-			displayDataTiket(data);
-			deleteRecord(data);
-			displayDataTiket(data);
-			break;
-		case PROSES:
-			bersih();
-			judul();
-			int psn,total;
-			cout << "Selamat Datang Kasir" << endl;
-			cout << "============================" << endl;
-			displayDataTiket(data);
-			mainKasir(data);
-			break;
-		case FINISH:
-			bersih();
-			judul();
-			menuUtama();
-			break;
+
 
 	}
-label_continue:
 
+	label_continue:
+	cout << endl;
 	cout << "Lanjutkan?(Y/N) : ";
 	cin >> is_continue;
 
 	if (is_continue == 'y' || is_continue == 'Y') {
 		goto lanjut;
 	}else if (is_continue == 'n' || is_continue == 'N') {
-		bersih();
+		system("cls");
 		judul();
 		cout << "Anda telah logout!" << endl;
 		menuUtama();
 	}else {
 		goto label_continue;
 	}
+
 }
 
-//Halaman Kasir
-void mainKasir(fstream &data) {
-	int nomor,org,total,kbl;
-
-	Tiket prosesTiket;
-
-	cout << "Nonton Film Apa ? : ";
-	cin >> nomor;
-	prosesTiket = readData(data,nomor);
-	int harga = 0;
-	stringstream h(prosesTiket.harga);
-	cout << "Film yang di pilih" << endl;
-	cout << "Nama Film 	: " << prosesTiket.nama << endl;
-	cout << "Jam Tayang 	: " << prosesTiket.jam << endl;
-	cout << "Harga Tiket 	: " << prosesTiket.harga << endl;
+// Tambah Data
+void addData() {
+	cout << "Tambah Tiket" << endl;
 	cout << "============================" << endl;
-	cout << "Berapa Orang ? : ";
-	cin >> org;
-	h >> harga;
-	total = org * harga;
-	cout << "Total nya adalah : " << total << ".000" << endl;
-	
+	cout << "\nBerapa Tiket? : ";
+	cin >> b;
+   	d = 0;
+   for (c = 0; c < b; c++) {
+   		d=d+1;
+   		cout << "\nTiket ke-" << d << endl;
+   		cout << "Kode Tiket\t: ";
+   		cin >> batas[a].kode;
+   		cout << "Nama Bus\t: ";
+   		cin >> batas[a].nama;
+   		cout << "Harga Tiket\t: ";
+   		cin >> batas[a].harga;
+   		cout << "Jam Berangkat\t: ";
+   		cin >> batas[a].jam;
+   		cout << "Tujuan\t\t: ";
+   		cin >> batas[a].tujuan;
+   		a++;
+   	}
+   	cout << endl;
+   	cout << "Data berhasil di tambahkan" << endl;
 }
 
-//Write Data
-void writeData(fstream &data, int posisi, Tiket &inputTiket){
-	data.seekp((posisi - 1)*sizeof(Tiket), ios::beg);
-	data.write(reinterpret_cast<char*>(&inputTiket),sizeof(Tiket));
+void lihatData() {
+	system("cls");
+	judul();
+	int i,j;
+ 	cout << "Data Tiket" << endl;
+ 	cout << "============================" << endl;
+ 	cout << "No. \tKode Tiket. \tNama Bus. \tHarga Tiket. \tJam Berangkat. \tTujuan" << endl;
+ 	cout << "==============================================================================" << endl;
+ 	j=0;
+ 	for (i = 0; i < a; i++) {
+ 	j+=1;
+  	cout << j << "\t";
+  	cout << batas[i].kode   << "\t\t";
+  	cout << batas[i].nama   << "\t\t";
+  	cout << batas[i].harga  << "\t\t";
+  	cout << batas[i].jam    << "\t\t";
+  	cout << batas[i].tujuan << "\t\t";
+  	cout << endl;
+  }
+  cout << "==============================================================================" << endl;
+
 }
 
-//Membaca Data Didatabase
-Tiket readData(fstream &data, int posisi) {
-	Tiket readTiket;
-	data.seekg((posisi - 1)*sizeof(Tiket),ios::beg);
-	data.read(reinterpret_cast<char*>(&readTiket),sizeof(Tiket));
-
-	return readTiket;
+void hapusData() {
+	system("cls");
+	judul();
+	int x,y;
+	lihatData();
+  	cout << "Hapus Tiket No : ";
+  	cin >> x;
+ 	y = x-1;
+ 	a--;
+ 		for (int i = y; i < a; i++){
+ 			batas[i]=batas[i+1];
+ 		}
+ cout<<"Tiket Berhasil Di Hapus";
+ cout << "============================" << endl;
 }
 
-//Tampilkan Data
-void displayDataTiket(fstream &data) {
-	int size = getDataSize(data);
-	Tiket showTiket;
-	cout << "No. \tNama Film.\t\tJam Tayang. \tHarga Tiket." << endl;
-		for (int i = 1; i <= size; i++) {
-			showTiket = readData(data,i);
-			cout << i << "\t";
-			cout << showTiket.nama << "\t\t";
-			cout << showTiket.jam << "\t\t";
-			// cout << showTiket.teater << "\t\t";
-			cout << showTiket.harga << endl;		
-		}
-}
-
-//Mengupdate Data
-void updateRecord(fstream &data) {
-	int nomor;
-	Tiket updateTiket;
-
-	cout << "Pilih data yang ingin di rubah (berdasarkan Nomor) : ";
-	cin >> nomor;
-	cin.ignore(numeric_limits<streamsize>::max(),'\n');
+void editData() {
+	int k,l;
+	cout << "Edit Data" << endl;
 	cout << "============================" << endl;
-
-	updateTiket = readData(data,nomor);
-
-	cout << "Data yang di pilih : " << endl;
-	cout << "Nama Film 	: " << updateTiket.nama << endl;
-	cout << "Jam Tayang 	: " << updateTiket.jam << endl;
-	// cout << "Theater 	: " << updateTiket.teater << endl;
-	cout << "Harga Tiket 	: " << updateTiket.harga << endl;
-	cout << "============================" << endl;
-
-	cout << "Merubah data tiket" << endl;
-	cout << "============================" << endl;
-
-	cout << "Nama Film 	: ";
-	getline(cin,updateTiket.nama);
-	cout << "Jam Tayang 	: ";
-	getline(cin,updateTiket.jam);
-	// cout << "Theater 	: ";
-	// getline(cin,updateTiket.teater);
-	cout << "Harga Tiket 	: ";
-	getline(cin,updateTiket.harga);
-
-	writeData(data,nomor,updateTiket);
-
-}
-
-//Cek Database
-void cekDatabase(fstream &data) {
-	data.open("data.bin", ios::out | ios::in | ios::binary);
-	//chech database ada atau tidak
-	if (data.is_open()) {
-		cout << "database di temukan " << endl;
-	}else {
-		cout << "database tidak di temukan. Sudah di buatkan database baru" << endl;
-		data.close();
-		data.open("data.bin", ios::trunc | ios::out | ios::in | ios::binary);
-	}
-}
-
-//tambah data tiket
-void addDataTiket(fstream &data){
-	
-	Tiket inputTiket, lastTiket;
-
-	int size = getDataSize(data);
-	cout << "Data Didatabase : " << size << endl;
-
-	if (size == 0) {
-		inputTiket.pk = 1;
-	}else {
-		lastTiket = readData(data,size);
-		inputTiket.pk = lastTiket.pk + 1;
-		cout << "pk = " << inputTiket.pk << endl;
-	}
-
-	cout << "Nama Film 	: ";
-	getline(cin, inputTiket.nama);
-	cout << "Jam Tayang 	: ";
-	getline(cin, inputTiket.jam);
-	// cout << "Theater 	: ";
-	// getline(cin, inputTiket.teater);
-	cout << "Harga Tiket 	: ";
-	getline(cin, inputTiket.harga);
-
-	writeData(data,size+1,inputTiket);
-}
-
-//Mengambil Ukuran Data
-int getDataSize(fstream &data){
-	int start, end;
-	data.seekg(0,ios::beg);
-	start = data.tellg();
-	data.seekg(0,ios::end);
-	end = data.tellg();
-	return (end-start)/sizeof(Tiket);
-}
-
-//Menghapus Data
-void deleteRecord(fstream &data){
-	int nomor,size,offset;
-	Tiket blankTiket, tempTiket;
-	fstream dataSementara;
-	size = getDataSize(data);
-
-	//pilih
-	cout << "Hapus nomor : ";
-	cin >> nomor;
-
-	//isi data kosong
-	writeData(data,nomor,blankTiket);
-
-	//cek data
-	dataSementara.open("temp.bin", ios::trunc | ios::out | ios::in | ios::binary);
-
-		offset = 0;
-		for (int i = 1; i <= size; i++) {
-			tempTiket = readData(data,i);
-				 
-				if (!tempTiket.nama.empty()) {
-					writeData(dataSementara,i - offset,tempTiket);
-				}else {
-					offset++;
-					cout << "Tiket di hapus" << endl;
-				}
-		}
-
-	//pindahkan data
-	size = getDataSize(dataSementara);
-	data.close();
-	data.open("data.bin", ios::trunc | ios::out | ios::binary);
-	data.close();
-	data.open("data.bin", ios::out | ios::in | ios::binary);
-
-	for (int i = 1; i <= size; i++) {
-		tempTiket = readData(dataSementara,i);
-		writeData(data,i,tempTiket);
-	}
+	lihatData();
+	cout << "Edit Tiket No : ";
+	cin >> k;
+	l=k-1;
+   		cout << "Kode Tiket\t: ";
+   		cin >> batas[l].kode;
+   		cout << "Nama Bus\t: ";
+   		cin >> batas[l].nama;
+   		cout << "Harga Tiket\t: ";
+   		cin >> batas[l].harga;
+   		cout << "Jam Berangkat\t: ";
+   		cin >> batas[l].jam;
+   		cout << "Tujuan\t\t: ";
+   		cin >> batas[l].tujuan;
+   	lihatData();
 }
