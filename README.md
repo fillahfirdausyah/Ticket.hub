@@ -36,5 +36,6 @@ Rabu 18-12-2019
 - Commit Upgrade Fitur
 
 Senin 23-12-2019
-- Mengunah Sistem
+- Mengubah Sistem
 - Mengupgrade Code
+- Menghapus sistem Database Binary
