@@ -39,3 +39,7 @@ Senin 23-12-2019
 - Mengubah Sistem
 - Mengupgrade Code
 - Menghapus sistem Database Binary
+
+Rabu 25-12-2019
+- Menambahkan Halam Kasir
+- Membuat lihat data untuk kasir
