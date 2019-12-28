@@ -1,6 +1,6 @@
 # Ticket.hub
 
-Aplikasi Pesan Tiket
+Ticket.hub adalah aplikasi pesan tiket online yang multi platform kedepanya, pada saat ini Ticket.hub masih dalam proses pengembangan. Ticket.hub baru mempunyai aplikasi sistem managemen tiket (kasir) untuk bus.
 
 Sabtu 7-12-2019
 - Kumpul mood
