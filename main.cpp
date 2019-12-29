@@ -1,7 +1,6 @@
 #include <iostream>
 #include <conio.h>
 #include <string>
-#include <sstream>
 
 using namespace std;
 
@@ -30,11 +29,11 @@ void tema() {
 	cout << endl;
 	cout << "Tema" << endl;
 	cout << "================" << endl;
-	cout << "[1] Dark-Red" << endl;
-	cout << "[2] Dark-Green" << endl;
-	cout << "[3] Red-Yellow" << endl;
-	cout << "[4] Light-Green" << endl;
-	cout << "[5] Light-Blue" << endl;
+	cout << "[1] Dark-Red"     << endl;
+	cout << "[2] Dark-Green"   << endl;
+	cout << "[3] Red-Yellow"   << endl;
+	cout << "[4] Light-Green"  << endl;
+	cout << "[5] Light-Blue"   << endl;
 	cout << "================" << endl;
 	cout << "Pilih Tema : ";
 	cin >> tema;
@@ -61,11 +60,6 @@ struct Tiket {
 	string 	tujuan;
 };
 
-struct Penumpang {
-	string kodeP;
-	string namaP;
-};
-
 Tiket batas[100];
 int a,b,c,d;
 
@@ -80,6 +74,8 @@ void hapusData();
 void editData();
 void prosesTiket();
 void cetakE();
+void help();
+void about();
 
 //Main Program
 main () {
@@ -110,11 +106,11 @@ void menuUtama() {
 	char is_continue;
 	cout << "=======+Menu Utama+=========" << endl;
 	cout << "[1] Login" << endl;
-	cout << "[2] Lupa" << endl;
-	cout << "[3] Help" << endl;
+	cout << "[2] Lupa"  << endl;
+	cout << "[3] Help"  << endl;
 	cout << "[4] About" << endl;
-	cout << "[5] Tema" << endl;
-	cout << "[6] exit" << endl;
+	cout << "[5] Tema"  << endl;
+	cout << "[6] exit"  << endl;
 	cout << "============================" << endl;
 	cout << "Pilih Menu [1-5]: ";
 	cin >> pilih;
@@ -126,17 +122,21 @@ void menuUtama() {
  		break;
 
  		case 2:
- 			cout << "lupa" << endl;
+ 			cout << "Anda lupa akun? silahkan hubungi super admin" << endl;
+ 			getch();
+ 			system("cls");
+			judul();
+			menuUtama();
  		break;
 
  		case 3:
  		system("cls");
 			judul();
-			cout << "\t\t\t\t   Selamat Datang di pusat bantuan Tickte.hub";
+			help();
  		break;
 
  		case 4:
- 			cout << "About " << endl;
+ 			about();
  		break;
 
  		case 5:
@@ -189,24 +189,23 @@ void login() {
 }
 
 // Halaman Admin
-void mainAdmin(){
+void mainAdmin() {
 	lanjut:
 	system("cls");
 	judul();
-
 
 	char is_continue;
 	int pilih;
 	cout << endl;
 	cout << endl;
-	cout << "Selamat Datang Admin" << endl;
+	cout << "Selamat Datang Admin"         << endl;
 	cout << "=======+Menu Admin+=========" << endl;
-	cout << "[1] Tambah Data" << endl;
-	cout << "[2] Lihat  Data" << endl;
-	cout << "[3] Hapus   Data" << endl;
-	cout << "[4] Edit  Data" << endl;
-	cout << "[5] Masuk Sebagai Kasir" << endl;
-	cout << "[6] Logout" << endl;
+	cout << "[1] Tambah Data"              << endl;
+	cout << "[2] Lihat  Data"              << endl;
+	cout << "[3] Hapus   Data"             << endl;
+	cout << "[4] Edit  Data"               << endl;
+	cout << "[5] Masuk Sebagai Kasir"      << endl;
+	cout << "[6] Logout"                   << endl;
 	cout << "============================" << endl;
 	cout << "Pilih Menu [1-6]: ";
 	cin >> pilih;
@@ -274,12 +273,12 @@ void mainKasir() {
 	int pilih;
 	cout << endl;
 	cout << endl;
-	cout << "Selamat Datang Kasir" << endl;
+	cout << "Selamat Datang Kasir"         << endl;
 	cout << "=======+Menu Kasir+=========" << endl;
-	cout << "[1] Lihat  Tiket" << endl;
-	cout << "[2] Proses Tiket" << endl;
-	cout << "[3] Cetak  E-Tiket" << endl;
-	cout << "[4] Logout" << endl;
+	cout << "[1] Lihat  Tiket"             << endl;
+	cout << "[2] Proses Tiket"             << endl;
+	cout << "[3] Cetak  E-Tiket"           << endl;
+	cout << "[4] Logout"                   << endl;
 	cout << "============================" << endl;
 	cout << "Pilih Menu [1-4]: ";
 	cin >> pilih;
@@ -333,24 +332,25 @@ void mainKasir() {
 
 // Tambah Data (Admin)
 void addData() {
-	cout << "Tambah Tiket" << endl;
+	cout << "Tambah Tiket"                 << endl;
 	cout << "============================" << endl;
 	cout << "\nBerapa Tiket? : ";
 	cin >> b;
+
    	d = 0;
    for (c = 0; c < b; c++) {
    		d=d+1;
    		cout << "\nTiket ke-" << d << endl;
    		cout << "Kode Tiket\t: ";
-   		cin >> batas[a].kode;
+   		cin  >> batas[a].kode;
    		cout << "Nama Bus\t: ";
-   		cin >> batas[a].nama;
+   		cin  >> batas[a].nama;
    		cout << "Harga Tiket\t: ";
-   		cin >> batas[a].harga;
+   		cin  >> batas[a].harga;
    		cout << "Jam Berangkat\t: ";
-   		cin >> batas[a].jam;
+   		cin  >> batas[a].jam;
    		cout << "Tujuan\t\t: ";
-   		cin >> batas[a].tujuan;
+   		cin  >> batas[a].tujuan;
    		a++;
    	}
    	cout << endl;
@@ -359,8 +359,6 @@ void addData() {
 
 // Lihat Data (Admin)
 void lihatData() {
-	// system("cls");
-	// judul();
 	int i,j;
  	cout << "Tiket" << endl;
  	cout << "============" << endl;
@@ -389,12 +387,13 @@ void hapusData() {
 	judul();
 	int x,y;
 	char z;
+
 	lihatData();
   	cout << "Hapus Tiket No : ";
-  	cin >> x;	
+  	cin  >> x;	
   	cout << endl;
   	cout << "Yakin Ingin Hapus? (y/n) : ";
-  	cin >> z;
+  	cin  >> z;
 
   		yakin:
   		if (z == 'y' || z == 'Y') {
@@ -429,24 +428,24 @@ void editData() {
 
 			cout << "Kode Tiket      : " << batas[i].kode   << endl;
 			cout << "Nama Bus        : " << batas[i].nama   << endl;
-			cout << "Harga Tiket 	: " << batas[i].harga  << endl;
-			cout << "Jam Berangkat 	: " << batas[i].jam    << endl;
-			cout << "Tujuan 		: " << batas[i].tujuan << endl;
+			cout << "Harga Tiket 	: "  << batas[i].harga  << endl;
+			cout << "Jam Berangkat 	: "  << batas[i].jam    << endl;
+			cout << "Tujuan 		: "  << batas[i].tujuan << endl;
 		}
 		cout << "=======================" << endl;
 		cout << endl;
 		cout << "Edit Data" << endl;
 		cout << "============================" << endl;
    		cout << "Kode Tiket\t: ";
-   		cin >> batas[l].kode;
+   		cin  >> batas[l].kode;
    		cout << "Nama Bus\t: ";
-   		cin >> batas[l].nama;
+   		cin  >> batas[l].nama;
    		cout << "Harga Tiket\t: ";
-   		cin >> batas[l].harga;
+   		cin  >> batas[l].harga;
    		cout << "Jam Berangkat\t: ";
-   		cin >> batas[l].jam;
+   		cin  >> batas[l].jam;
    		cout << "Tujuan\t\t: ";
-   		cin >> batas[l].tujuan;
+   		cin  >> batas[l].tujuan;
    	system("cls");
    	judul();
    	lihatData();
@@ -471,9 +470,9 @@ void prosesTiket(){
 
 			cout << "Kode Tiket      : " << batas[i].kode   << endl;
 			cout << "Nama Bus        : " << batas[i].nama   << endl;
-			cout << "Harga Tiket 	: " << batas[i].harga  << endl;
-			cout << "Jam Berangkat 	: " << batas[i].jam    << endl;
-			cout << "Tujuan 		: " << batas[i].tujuan << endl;
+			cout << "Harga Tiket 	: "  << batas[i].harga  << endl;
+			cout << "Jam Berangkat 	: "  << batas[i].jam    << endl;
+			cout << "Tujuan 		: "  << batas[i].tujuan << endl;
 			cout << "=======================" << endl;
 			
 		}
@@ -484,7 +483,103 @@ void prosesTiket(){
 	
 }
 
+// Cetak E-TIket (kasir)
 void cetakE() {
 	cout << "Cetak E-Tiket" << endl;
 	cout << "==================" << endl;
+	cout << "Mohon maaf cetak E-Tiket masih dalam proses maintanance" << endl;
+}
+
+// Help
+void help() {
+	int bantu;
+	char kbl;
+	awal:
+	cout << "Selamat Datang di pusat bantuan Ticket.hub" << endl;
+	cout << "====================================================" << endl;
+	cout << endl;
+	cout << "Ada yang bisa kami bantu?"    << endl;
+	cout << "============================" << endl;
+	cout << "[1] Admin "  << endl;
+	cout << "[2] Kasir "  << endl;
+	cout << "[3] Kembali" << endl;
+	cout << "============================" << endl;
+	cout << "Bantuan tentang : ";
+	cin  >> bantu;
+
+		if (bantu == 1) {
+			system("cls");
+			judul();
+			cout << "Pusat bantuan tentang admin" << endl;
+			cout << "================================" << endl;
+			cout << "Jika ingin masuk sebagai admin pada menu utama pilih menu 1 (login)." << endl;
+			cout << "Pada kolom username ketikan 'admin' dan password 'admin123'" << endl;
+			cout << endl;
+			cout << "[1] Tambah Data " << endl;
+			cout << "Menu tambah data untuk menambahkan data tiket yang nanti akan diproses oleh kasir" << endl;
+			cout << "Format pengisian data yang benar sebagai berikut :" << endl;
+			// cout << endl;
+			cout << "- Pilih berapa tiket yang akan dimasukan" << endl; 
+			cout << "- Kode tiket berisi 4 huruf kapital dan diikuti 2 angka" << endl;
+			cout << "  Kode Tiket    : AXOW-51" << endl;
+			cout << "- Nama bus diisi oleh nama bunga" << endl;
+			cout << "  Nama Bus      : Melati" << endl;
+			cout << "- Harga tiket diisi tanpa menggunakan titik(.) atau koma(,)" << endl;
+			cout << "  Harga Tiket   : 45000" << endl;
+			cout << "- Jam keberangatan dipisahkan oleh titik dua(:)" << endl;
+			cout << "  Jam Berangkat : 10:00" << endl;
+			cout << "- Tujuan bus diisi dengan nama kota" << endl;
+			cout << "  Tujuan        : Solo" << endl;
+			// cout << endl;
+			cout << "[2] Lihat Data " << endl;
+			cout << "  Pada menu ini kita bisa melihat data tiket yang sudah di inputkan." << endl;
+			// cout << endl;
+			cout << "[3] Hapus Data " << endl;
+			cout << "  Untuk menghapus data tiket kita cukup memilih nomor berapa tiket yang akan di hapus." << endl;
+			// cout << endl;
+			cout << "[4] Edit Data " << endl;
+			cout << "  Ketika kita ingin mengedit tiket kita cukup memilih tiket yang akan diedit berdasarkan nomor tiket tersebut." << endl;
+			cout << endl;
+			cout << "Kembali? (y): ";
+			cin  >> kbl;
+				if (kbl == 'y' || kbl == 'Y') {
+					system("cls");
+					judul();
+					goto awal;
+				}
+		}else if (bantu == 2) {
+			system("cls");
+			judul();
+			cout << "Pusat bantuan tentang kasir" << endl;
+			cout << "================================" << endl;
+			cout << "Jika ingin masuk sebagai kasir pada menu utama pilih menu 1 (login)." << endl;
+			cout << "Pada kolom username ketikan 'kasir' dan password 'kasir123'" << endl;
+			cout << endl;
+			cout << "[1] Lihat Tiket" << endl;
+			cout << "	Untuk melihat tiket yang sudah dimasukan oleh admin." << endl;
+			cout << "[2] Proses Tiket" << endl;
+			cout << "	Dimenu ini kasir akan memproses pesanan dari penumpang yang ingin membeli tiket" << endl;
+			cout << "  kasir memilih bus yang dipesan penumpang berdasarkan nomor tiket" << endl; 
+			cout << "  kasir akan menanyakan berapa orang dan akan memproses pembayaran." << endl;
+			cout << "[3] Cetak  E-Tiket" << endl;
+			cout << "	Dimenu ini kasir bisa mencetak E-Tiket penumpang yang sudah di pesan online" << endl;
+			cout << "  kasir hanya menanyakan kode penumpang dan bisa langsung di proses" << endl;
+			cout << endl;
+			cout << "Kembali? (y): ";
+			cin  >> kbl;
+				if (kbl == 'y' || kbl == 'Y') {
+					system("cls");
+					judul();
+					goto awal;
+				}
+		}else if (bantu == 3) {
+			system("cls");
+			judul();
+			menuUtama();
+		}
+}
+
+// About
+void about() {
+
 }
