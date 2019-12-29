@@ -52,3 +52,7 @@ Sabtu 28-12-2019
 - Membuat proses tiket untuk kasir
 - Membuat pilih tema
 - Fix minor bug
+
+Minggu 29-12-2019
+- Membuat pusat bantuan
+- Fix minor bug
