@@ -1,6 +1,6 @@
 # Ticket.hub
 
-Ticket.hub adalah aplikasi pesan tiket online yang multi platform kedepanya, pada saat ini Ticket.hub masih dalam proses pengembangan. Ticket.hub baru mempunyai aplikasi sistem managemen tiket (kasir) untuk bus.
+Ticket.hub adalah aplikasi Management dan Sistem Kasir untuk tiket bus yang multi platform kedepanya,Ticket.hub pertama dibuat dalam bentuk Website App(V1.3) dan sekarang Ticket.hub dalam proses pengembangan dan berharap lebih baik kedepannya
 
 
 
@@ -56,3 +56,9 @@ Sabtu 28-12-2019
 Minggu 29-12-2019
 - Membuat pusat bantuan
 - Fix minor bug
+
+Senin 30-12-2019
+- Menambahkan about
+- Fix minorbug
+- Upgrade source code
+- Merge fitur dengan GIT

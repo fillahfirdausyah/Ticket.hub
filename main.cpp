@@ -136,6 +136,8 @@ void menuUtama() {
  		break;
 
  		case 4:
+ 		system("cls");
+ 			judul();
  			about();
  		break;
 
@@ -299,7 +301,7 @@ void mainKasir() {
 		break;
 
 		case CETAK:
-			
+			cetakE();
 		break;
 
 		case KELUAR:
@@ -421,18 +423,6 @@ void editData() {
 	system("cls");
 	judul();
 	l = k-1;
-	for (i = l; i < a; i++) {
-
-			cout << "Tiket yang pilih" << endl;
-			cout << "=======================" << endl;
-
-			cout << "Kode Tiket      : " << batas[i].kode   << endl;
-			cout << "Nama Bus        : " << batas[i].nama   << endl;
-			cout << "Harga Tiket 	: "  << batas[i].harga  << endl;
-			cout << "Jam Berangkat 	: "  << batas[i].jam    << endl;
-			cout << "Tujuan 		: "  << batas[i].tujuan << endl;
-		}
-		cout << "=======================" << endl;
 		cout << endl;
 		cout << "Edit Data" << endl;
 		cout << "============================" << endl;
@@ -454,32 +444,36 @@ void editData() {
 
 // Proses Tiket (Kasir)
 void prosesTiket(){
-	int i,k,j;
-	int org,total,diskon;
+	int i,j,k;
+	int org,total,diskon,pm,kbl;
 	int bus;
-
-		lihatData();
+	
+	lihatData();
 	cout << "Pilih Bus : ";
-	cin >> bus;
-	j = bus-1;
-
-		for (i = j; i < a; i++) {
-
-			cout << "Tiket yang anda pilih" << endl;
-			cout << "=======================" << endl;
-
-			cout << "Kode Tiket      : " << batas[i].kode   << endl;
-			cout << "Nama Bus        : " << batas[i].nama   << endl;
-			cout << "Harga Tiket 	: "  << batas[i].harga  << endl;
-			cout << "Jam Berangkat 	: "  << batas[i].jam    << endl;
-			cout << "Tujuan 		: "  << batas[i].tujuan << endl;
-			cout << "=======================" << endl;
-			
-		}
+	cin >> k;
+	j = k-1;
 		cout << "Berapa orang ? : ";
 		cin >> org;
 		total = org * batas[j].harga;
 		cout << "Total nya adalah : " << total << endl;
+			if (total > 300000) {
+				diskon = total - 25000;
+				cout << "Dapat potongan sebesar 25.000" << endl;
+				cout << "Total yang harus dibayar sebesar " << diskon << endl;
+				cout << "Uang pembeli sebesar : ";
+				cin  >> pm;
+				kbl = diskon - pm;
+				cout << "Kembalian sebesar : " << kbl << endl;
+			}else if (total > 100000 ) {
+				diskon = total - 15000;
+				cout << "Dapat potongan sebesar 15.000" << endl;
+				cout << "Total yang harus dibayar sebesar " << diskon << endl;
+				cout << "Uang pembeli sebesar : ";
+				cin  >> pm;
+				kbl = pm - diskon;
+				cout << "Kembalian sebesar : " << kbl << endl;
+			}
+		
 	
 }
 
@@ -487,7 +481,7 @@ void prosesTiket(){
 void cetakE() {
 	cout << "Cetak E-Tiket" << endl;
 	cout << "==================" << endl;
-	cout << "Mohon maaf cetak E-Tiket masih dalam proses maintanance" << endl;
+	cout << "Mohon maaf cetak E-Tiket masih dalam proses perbaikan" << endl;
 }
 
 // Help
@@ -502,7 +496,7 @@ void help() {
 	cout << "============================" << endl;
 	cout << "[1] Admin "  << endl;
 	cout << "[2] Kasir "  << endl;
-	cout << "[3] Kembali" << endl;
+	cout << "[0] Kembali" << endl;
 	cout << "============================" << endl;
 	cout << "Bantuan tentang : ";
 	cin  >> bantu;
@@ -540,7 +534,7 @@ void help() {
 			cout << "[4] Edit Data " << endl;
 			cout << "  Ketika kita ingin mengedit tiket kita cukup memilih tiket yang akan diedit berdasarkan nomor tiket tersebut." << endl;
 			cout << endl;
-			cout << "Kembali? (y): ";
+			cout << "[y/n] Kembali";
 			cin  >> kbl;
 				if (kbl == 'y' || kbl == 'Y') {
 					system("cls");
@@ -565,14 +559,14 @@ void help() {
 			cout << "	Dimenu ini kasir bisa mencetak E-Tiket penumpang yang sudah di pesan online" << endl;
 			cout << "  kasir hanya menanyakan kode penumpang dan bisa langsung di proses" << endl;
 			cout << endl;
-			cout << "Kembali? (y): ";
+			cout << "[0] Kembali";
 			cin  >> kbl;
 				if (kbl == 'y' || kbl == 'Y') {
 					system("cls");
 					judul();
 					goto awal;
 				}
-		}else if (bantu == 3) {
+		}else if (bantu == 0) {
 			system("cls");
 			judul();
 			menuUtama();
@@ -581,5 +575,52 @@ void help() {
 
 // About
 void about() {
+	int about;
+	char kbl;
+	con:
+	cout << "About" << endl;
+	cout << "========================" << endl;
+	cout << endl;
+	cout << "[1] About Me" << endl;
+	cout << "[2] About Ticket.hub" << endl;
+	cout << "[0] Kembali" << endl;
+	cout << "========================" << endl;
+	cout << "About : ";
+	cin >> about;
 
+		if (about == 1) {
+			system("cls");
+			judul();
+			cout << "Programmer" << endl;
+			cout << "======================" << endl;
+			cout << "Nama saya adalah Fillah Akbar Firdausyah saya lahir dikota Bitung,Sulawesi Utara pada tahun 2000, saya merupakan" << endl;;
+			cout << "anak yang suka tentang teknologi terlebih pada bidang IT sampai-sampai waktu SMK dulu saya sering dipanngil IT Guy" << endl;; 
+			cout << "Karena ketertarikan saya akan dunia IT saya waktu lulus SMP memutuskan untuk masuk SMK Jurusan Teknik Komputer dan Jaringan (TKJ)," << endl; 
+			cout << "dan setelah saya lulu dari SMK saya masuk ke Universitas AMIKOM Yogyakarta mengambil Jurusan S1-Informatika" << endl;
+			cout << "[y/n] Kembali : ";
+			cin  >> kbl;
+			if (kbl == 'y' || kbl == 'Y') {
+					system("cls");
+					judul();
+					goto con;
+				}
+		}else if (about == 2) {
+			system("cls");
+			judul();
+			cout << "Ticket.hub V2.4" << endl;
+			cout << "======================" << endl;
+			cout << " Ticket.hub adalah aplikasi Management dan Sistem Kasir untuk tiket bus yang multi platform kedepanya," << endl; 
+			cout << "Ticket.hub pertama dibuat dalam bentuk Website App(V1.3) dan sekarang Ticket.hub dalam proses pengembangan dan berharap lebih baik kedepannya" << endl;
+			cout << "[y/n] Kembali : ";
+			cin  >> kbl;
+			if (kbl == 'y' || kbl == 'Y') {
+					system("cls");
+					judul();
+					goto con;
+				}
+		}else if (about == 0) {
+			system("cls");
+			judul();
+			menuUtama();
+		}
 }
