@@ -62,3 +62,6 @@ Senin 30-12-2019
 - Fix minorbug
 - Upgrade source code
 - Merge fitur dengan GIT
+
+Selasa 31-12-2019
+- Fix minor bug
