@@ -65,3 +65,7 @@ Senin 30-12-2019
 
 Selasa 31-12-2019
 - Fix minor bug
+
+Sabtu 4-01-2020
+- Fix tampilan
+- Fix minor bug

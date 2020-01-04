@@ -63,6 +63,14 @@ struct Tiket {
 Tiket batas[100];
 int a,b,c,d;
 
+struct Penumpang {
+	string Kp;
+	string Np;
+};
+
+Penumpang data[100];
+int e,f,g,h;
+
 //Prototype Fungsi
 void menuUtama();
 void login();
@@ -88,10 +96,8 @@ main () {
  	tema();
  	getch();
  	system("cls");
-
 	judul();
 	menuUtama();
-	// mainAdmin();
 
 getch();
 }
@@ -103,6 +109,7 @@ getch();
 void menuUtama() {
 
 	int pilih;
+	string user;
 	char is_continue;
 	cout << "=======+Menu Utama+=========" << endl;
 	cout << "[1] Login" << endl;
@@ -122,7 +129,30 @@ void menuUtama() {
  		break;
 
  		case 2:
- 			cout << "Anda lupa akun? silahkan hubungi super admin" << endl;
+ 		
+ 			cout << "Lupa Akun" << endl;
+ 			cout << "=====================" << endl;
+ 			cout << "Masukan username : ";
+ 			cin >> user;
+ 				if (user == "admin") {
+ 					system("cls");
+ 					judul();
+ 					loading();
+ 					cout << endl;
+ 					cout << "Password anda adalah : admin123" << endl;
+ 				}else if (user == "kasir") {
+ 					system("cls");
+ 					judul();
+ 					loading();
+ 					cout << endl;
+ 					cout << "Password anda adalah : kasir123" << endl;
+ 				}else {
+ 					system("cls");
+ 					judul();
+ 					loading();
+ 					cout << endl;
+ 					cout << "Akun anda tidak di temukan silahkan hubungi IT Staf" << endl;
+ 				}
  			getch();
  			system("cls");
 			judul();
@@ -154,14 +184,13 @@ void menuUtama() {
  			cout << "Terima Kasih " << endl;
  		break;
 	}
-
 }
 
 // Proses Login
 void login() {
-
 	system("cls");
 	judul();
+	lagi:
 	string user;
 	string pass;
 	cout << "Silahkan Login" << endl;
@@ -185,8 +214,12 @@ void login() {
 		}else {
 			system("cls");
 			judul();
-			 cout << "Anda Karyawan? Jika lupa password hubungi Admin!" << endl;
-			menuUtama();
+			loading();
+			system("cls");
+			judul();
+			 cout << "Username atau Password Salah" << endl;
+			 cout << endl;
+			goto lagi;
 		}
 }
 
@@ -461,7 +494,9 @@ void prosesTiket(){
 	cout << "Pilih Bus : ";
 	cin >> k;
 	j = k-1;
-	cout << endl;
+	system("cls");
+	judul();
+
 	cout << "Tiket yang dipilih" << endl;
 	cout << "========================" << endl;
 	cout << "Kode Tiket    : " << batas[j].kode << endl;
@@ -470,28 +505,57 @@ void prosesTiket(){
 	cout << "Jam Berangkat : " << batas[j].jam << endl;
 	cout << "Tujuan        : " << batas[j].tujuan << endl;
 	cout << "========================" << endl;
-		cout << "Berapa orang ? : ";
+	cout << "Berapa orang  : ";
 		cin >> org;
 		total = org * batas[j].harga;
-		cout << "Total nya adalah : " << total << endl;
-			if (total >= 300000 && total <= 500000) {
+	system("cls");
+	judul();
+
+			if (total > 300000 && total <= 500000) {
 				diskon = total - 25000;
-				cout << "Dapat potongan sebesar 25.000" << endl;
-				cout << "Total yang harus dibayar : " << diskon << endl;
+				cout << "Preview" << endl;
+				cout << "========================" << endl;
+				cout << "Kode Tiket    : " << batas[j].kode << endl;
+				cout << "Nama Bus      : " << batas[j].nama << endl;
+				cout << "Harga Tiket   : " << batas[j].harga << endl;
+				cout << "Jam Berangkat : " << batas[j].jam << endl;
+				cout << "Tujuan        : " << batas[j].tujuan << endl;
+				cout << "Penumpang     : " << org << " orang"<< endl;
+				cout << "Potongan      : 25000" << endl;
+				cout << "Total         : " << diskon << endl;
+				cout << "========================" << endl;
 				cout << "Uang pembeli sebesar     : ";
 				cin  >> pm;
 				kbl = diskon - pm;
 				cout << "Kembalian sebesar        : " << kbl << endl;
-			}else if (total <= 100000 && total <= 250000 ) {
+			}else if (total >= 100000 && total <= 300000 ) {
 				diskon = total - 15000;
-				cout << "Dapat potongan sebesar 15.000" << endl;
-				cout << "Total yang harus dibayar : " << diskon << endl;
+				cout << "Preview" << endl;
+				cout << "========================" << endl;
+				cout << "Kode Tiket    : " << batas[j].kode << endl;
+				cout << "Nama Bus      : " << batas[j].nama << endl;
+				cout << "Harga Tiket   : " << batas[j].harga << endl;
+				cout << "Jam Berangkat : " << batas[j].jam << endl;
+				cout << "Tujuan        : " << batas[j].tujuan << endl;
+				cout << "Penumpang     : " << org << " orang"<< endl;
+				cout << "Potongan      : 15000" << endl;
+				cout << "Total         : " << diskon << endl;
+				cout << "========================" << endl;
 				cout << "Uang pembeli sebesar     : ";
 				cin  >> pm;
 				kbl = pm - diskon;
 				cout << "Kembalian sebesar        : " << kbl << endl;
 			}else {
-				cout << "Total yang harus dibayar : " << total << endl;
+				cout << "Preview" << endl;
+				cout << "========================" << endl;
+				cout << "Kode Tiket    : " << batas[j].kode << endl;
+				cout << "Nama Bus      : " << batas[j].nama << endl;
+				cout << "Harga Tiket   : " << batas[j].harga << endl;
+				cout << "Jam Berangkat : " << batas[j].jam << endl;
+				cout << "Tujuan        : " << batas[j].tujuan << endl;
+				cout << "Penumpang     : " << org <<  "orang"<< endl;
+				cout << "Total         : " << total << endl;
+				cout << "========================" << endl;
 				cout << "Uang pembeli sebesar     : ";
 				cin  >> pm;
 				kbl = total - pm;
