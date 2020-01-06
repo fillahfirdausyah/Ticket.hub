@@ -151,7 +151,7 @@ void menuUtama() {
  					judul();
  					loading();
  					cout << endl;
- 					cout << "Akun anda tidak di temukan silahkan hubungi IT Staf" << endl;
+ 					cout << "Akun anda tidak di temukan silahkan hubungi Staf IT" << endl;
  				}
  			getch();
  			system("cls");
@@ -426,8 +426,7 @@ void hapusData() {
 	lihatData();
   	cout << "Hapus Tiket No : ";
   	cin  >> x;	
-  	cout << endl;
-  	cout << "Yakin Ingin Hapus? (y/n) : ";
+    cout << "Yakin Ingin Hapus? (Y/N) : ";
   	cin  >> z;
 
   		yakin:
@@ -438,8 +437,7 @@ void hapusData() {
  			batas[i]=batas[i+1];
  		}
  			cout<<"Tiket Berhasil Di Hapus" << endl;;
- 			cout << "======================" << endl;
-  		}else if (z == 'n' || z == 'N') {
+   		}else if (z == 'n' || z == 'N') {
   			goto awal;
   		}else {
   			goto yakin;
@@ -481,7 +479,7 @@ void editData() {
    	system("cls");
    	judul();
    	lihatData();
-   		cout << "Data berhasil di simpan" << endl;
+   		cout << "Data berhasil diubah" << endl;
 }
 
 // Proses Tiket (Kasir)
