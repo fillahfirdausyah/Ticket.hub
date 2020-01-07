@@ -508,15 +508,15 @@ void prosesTiket(){
 	j = k-1;
 	system("cls");
 	judul();
-
-	cout << "Tiket yang dipilih" << endl;
-	cout << "========================" << endl;
-	cout << "Kode Tiket    : " << batas[j].kode << endl;
-	cout << "Nama Bus      : " << batas[j].nama << endl;
-	cout << "Harga Tiket   : " << batas[j].harga << endl;
-	cout << "Jam Berangkat : " << batas[j].jam << endl;
-	cout << "Tujuan        : " << batas[j].tujuan << endl;
-	cout << "========================" << endl;
+	cout << "==============================================" << endl;
+	cout << "|            Tiket yang dipilih              |" << endl;
+	cout << "==============================================" << endl;
+	cout << "|Kode Tiket      : " << batas[j].kode << endl;
+	cout << "|Nama Bus        : " << batas[j].nama << endl;
+	cout << "|Harga Tiket     : " << batas[j].harga << endl;
+	cout << "|Jam Berangkat   : " << batas[j].jam << endl;
+	cout << "|Tujuan          : " << batas[j].tujuan << endl;
+	cout << "==============================================" << endl;
 	cout << "Berapa orang  : ";
 		cin >> org;
 		total = org * batas[j].harga;
@@ -525,17 +525,18 @@ void prosesTiket(){
 
 			if (total > 300000 && total <= 500000) {
 				diskon = total - 25000;
-				cout << "Preview" << endl;
-				cout << "========================" << endl;
-				cout << "Kode Tiket    : " << batas[j].kode << endl;
-				cout << "Nama Bus      : " << batas[j].nama << endl;
-				cout << "Harga Tiket   : " << batas[j].harga << endl;
-				cout << "Jam Berangkat : " << batas[j].jam << endl;
-				cout << "Tujuan        : " << batas[j].tujuan << endl;
-				cout << "Penumpang     : " << org << " orang"<< endl;
-				cout << "Potongan      : 25000" << endl;
-				cout << "Total         : " << diskon << endl;
-				cout << "========================" << endl;
+				cout << "==============================================" << endl;
+				cout << "|                  Preview                   |" << endl;
+				cout << "==============================================" << endl;
+				cout << "|Kode Tiket      : " << batas[j].kode << endl;
+				cout << "|Nama Bus        : " << batas[j].nama << endl;
+				cout << "|Harga Tiket     : " << batas[j].harga << endl;
+				cout << "|Jam Berangkat   : " << batas[j].jam << endl;
+				cout << "|Tujuan          : " << batas[j].tujuan << endl;
+				cout << "|Penumpang       : " << org << " orang"<< endl;
+				cout << "|Potongan        : 25000" << endl;
+				cout << "|Total           : " << diskon << endl;
+				cout << "==============================================" << endl;
 				cout << "Uang pembeli sebesar     : ";
 				cin  >> pm;
 				kbl = diskon - pm;
@@ -718,7 +719,7 @@ void about() {
 			judul();
 			cout << "Ticket.hub V2.4" << endl;
 			cout << "======================" << endl;
-			cout << " Ticket.hub adalah aplikasi Management dan Sistem Kasir untuk tiket bus yang multi platform kedepanya," << endl; 
+			cout << "Ticket.hub adalah aplikasi Management dan Sistem Kasir untuk tiket bus yang multi platform kedepanya," << endl; 
 			cout << "Ticket.hub pertama dibuat dalam bentuk Website App(V1.3) dan sekarang Ticket.hub dalam proses pengembangan dan berharap lebih baik kedepannya" << endl;
 			nue:
 			cout << "[y/n] Kembali : ";
