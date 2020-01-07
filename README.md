@@ -72,3 +72,6 @@ Sabtu 4-01-2020
 
 Senin 6-01-2020
 - Selesai 100%
+
+Selasa 7-01-2020
+- Sudah presentasi
